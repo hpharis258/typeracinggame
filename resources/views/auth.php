@@ -1,0 +1,1 @@
+<div>Auth PAGE</div>
