@@ -29,4 +29,26 @@ class PostController extends Controller
         $newPost = Post::create($data);
         return redirect(route('posts.index'));
     }
+    public function edit(Post $post)
+    {
+        return view('edit', ['post' => $post]);
+    }
+    public function update(Post $post, Request $request)
+    {
+        $data = $request->validate([
+            'user_id' => 'nullable',
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'nullable|image',
+            'up_vote_count' => 'integer',
+        ]);
+        $post->update($data);
+
+        return redirect(route('posts.index'))->with("success", "Post updated successfully!");
+    }
+    public function delete(Post $post)
+    {
+        $post->delete();
+        return redirect(route('posts.index'))->with("success", "Post deleted successfully!");
+    }
 }
