@@ -1,1 +1,0 @@
-<div>Scores PAGE</div>

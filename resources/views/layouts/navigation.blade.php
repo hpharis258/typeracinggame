@@ -1,100 +1,33 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
+<nav class="bg-white border-gray-200 dark:bg-gray-900">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="data:image/jpeg;base64,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" class="h-8" alt="Flowbite Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Type racing game</span>
+    </a>
+    <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <a href="/" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
+        </li>
+        <li>
+          <a href="/scores" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Scores</a>
+        </li>
+        <li>
+          <a href="/posts" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Posts</a>
+        </li>
+        <li>
+          <a href="about" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
+        </li>
+        <li>
+          <a href="profile" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Profile</a>
+        </li>
+      </ul>
     </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
-    </div>
+  </div>
 </nav>
