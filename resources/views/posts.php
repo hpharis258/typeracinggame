@@ -1,1 +1,0 @@
-<div>Posts PAGE</div>

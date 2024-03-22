@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('image')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->integer('up_vote_count')->default(0);
             $table->timestamps();
         });
     }
