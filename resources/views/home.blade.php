@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@vite(['resources/js/game.js'])
 @if(Auth::check()) 
         <x-app-layout>
       <!doctype html>
@@ -8,7 +10,7 @@
         @vite('resources/css/app.css')
       </head>
       <body>
-      Main Content
+        <h1> WPM:0 </h1>
 
       </body>
       </html>
@@ -16,7 +18,14 @@
 
 @else 
     <x-guest-layout>
-
+    
+    <div id="wordPerMinuteArea"><h1>WPM: 0</h1></div>
+    <div id="timer">Time Left: 30</div>
+    <div id="GameArea" tabindex="0">
+        <div id="wordsToType">Loading Quote...</div>
+        <div id="focusError">Click on here to start typing!</div>
+    </div>
+  
     </x-guest-layout>
 
 @endif

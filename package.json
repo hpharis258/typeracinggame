@@ -19,6 +19,7 @@
         "@vitejs/plugin-react": "^4.2.1",
         "dotenv": "^16.4.5",
         "flowbite": "^2.3.0",
+        "jquery": "^3.7.1",
         "react-beautiful-dnd": "^13.1.1",
         "react-dom": "^18.2.0",
         "react-responsive-modal": "^6.4.2",
