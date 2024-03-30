@@ -13,8 +13,12 @@
 } */
 div.word{
     display: inline-block;
-    margin: 0 5px;
 
+}
+
+.current-letter {
+    color: blue;
+    background-color: yellow;
 }
 
 #game-information{
@@ -62,7 +66,7 @@ div.word{
 }
 
 #gameArea:focus #cursor{
-    display: block;
+    display: none;
     outline: 0;
 }
 
@@ -79,6 +83,15 @@ div.word{
 }
 .letter.incorrect {
     color: red;
+}
+
+.space.correct {
+    color: green;
+    background-color: green;
+}
+.space.incorrect {
+    color: red;
+    background-color: red;
 }
 
 #cursor{

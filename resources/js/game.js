@@ -19,7 +19,7 @@ async function getNextQuote() {
 }
 // Formats the quote into HTML elements
 function formatWord(word){
-    return `<div class="word" style="margin: 5px"><span class="letter">${word.split('').join('</span><span class="letter">')}</span></div><div class="space">SPACE</div>`;
+    return `<div class="word" style="margin: 5px"><span class="letter">${word.split('').join('</span><span class="letter">')}</span></div><div class="space">⠀</div>`;
 }
 // Adds the letter classes onto each of the words and sets the firts word and letter as the current word and letter
 function addLetterClassesToWords(){
@@ -41,6 +41,8 @@ function addLetterClassesToWords(){
     lastEle.remove();
     isLoading = false;
 }
+
+
 
 // Add Keyup event listener 
 document.getElementById("GameArea").addEventListener("keyup", function(event) {
@@ -68,104 +70,227 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
     const isLetter = PressedKey.length === 1 && PressedKey !== ' ';
     const isSpace = PressedKey === ' ';
     // Get Current Letter and Current Word
-    const currentWord = document.querySelector('.current-word');
+    let currentWord = document.querySelector('.current-word');
     let currentLetter = document.querySelector('.current-letter');
     // Get the expected letter
-    const expectedLetter = currentLetter?.innerHTML == null ? ' ' : currentLetter.innerHTML;
-    // Handle Change of Letter   
-    if(isLetter)
-    {
-        if(currentLetter)
-        {
-            if(PressedKey === expectedLetter)
-            {
-                // if key correct add correct class to the letter and move to the next letter
-                currentLetter.classList.add('correct');
-                currentLetter.classList.remove('current-letter');
-                //alert(currentLetter.nextElementSibling.innerHTML);
-                if(currentLetter.nextElementSibling !== null)
-                {
-                    currentLetter.nextElementSibling.classList.add('current-letter');
-                }else
-                {
-                    // First Check if there is a space next
-                    isSpaceNext = currentWord.nextElementSibling?.classList.contains('space');
-                    if(isSpaceNext)
-                    {
-                        alert('Space is next');
-                        // move current letter to the space
-                        //currentLetter.classList.remove('current-letter');
-                        //currentWord.nextElementSibling.classList.add('current-letter');
-                    }
-                    // Check if thre is a next word
-                    let nextWord = currentWord?.nextElementSibling?.nextElementSibling;
-                    if(nextWord === null || nextWord === undefined)
-                    {
-                        // Get the next quote and format the words
-                        //GetQuoteAndFormatWords();
-                        return;
-                    }else
-                    {
-                        // Move to the next word
-                        currentWord.classList.remove('current-word');
-                        nextWord.classList.add('current-word');
-                        nextWord.firstElementChild.classList.add('current-letter');
-                    }
-                }
-                
-            }
-            else
-            {
-                // if key incorrect add incorrect class to the letter
-                currentLetter.classList.add('incorrect');
-                // move to the next letter
-                //currentLetter.classList.remove('current-letter');
-                if(currentLetter.nextElementSibling !== null)
-                {
-                    currentLetter.nextElementSibling.classList.add('current-letter');
-                    currentLetter.classList.remove('current-letter');
-                }else
-                {
-                    // Check if there is a next word
-                    let nextWord = currentWord?.nextElementSibling?.nextElementSibling;
-                    if(nextWord === null)
-                    {
-                        
-                        // Get the next quote and format the words
-                        //GetQuoteAndFormatWords();
-                        return;
-                    }else
-                    {
-                        // Move to the next word
-                        currentWord.classList.remove('current-word');
-                        nextWord.classList.add('current-word');
-                        alert(nextWord.firstElementChild.innerHTML);
-                        nextWord.firstElementChild.classList.add('current-letter');
-                    }
-                }
+    const expectedLetter = currentLetter?.innerHTML;
 
-            }
-        } else
-        {
-            if(isLoading === false)
-            {
-                alert(currentLetter.innerHTML);
-                //alert('No current letter');
-                // Get the next quote and format the words
-                //GetQuoteAndFormatWords();
-            }
-            //alert('No current letter');
-        
-        }
-    }
-    if(isSpace)
-    {
-        // Re - write the code that handles the space key
-    }
+    // First check backspace
     if(isBackspace)
     {
-        // Re - write the code that handles the backspace key
-    }    
+        //alert('Backspace Pressed');
+        // Handle Backspace
+        //alert($('current-letter').prev());
+        let prevLetter = currentLetter?.previousElementSibling;
+        let prevWord = currentWord?.previousElementSibling;
+        if(prevLetter === null && prevWord === null)
+        {
+            // there is no previous letter or word to move to 
+            return;
+        }
+        if(prevWord !== null)
+        {
+            // check what is the previous element
+            if(prevWord.classList.contains('word'))
+            {
+                // move to the previous word
+            }
+            if(prevWord.classList.contains('space'))
+            {
+                let tempCurrentLetter = prevWord;
+                let tempPrevWord = prevWord.previousElementSibling;
+                //console.log(tempPrevWord);
+                // set current letter to the space
+                tempCurrentLetter.classList.add('current-letter');
+                tempCurrentLetter.classList.remove('correct');
+                tempCurrentLetter.classList.remove('incorrect');
+                currentLetter.classList.remove('current-letter');
+                currentLetter = tempCurrentLetter;
+                // move to the previous word
+                //alert('Previous is at space');
+                tempPrevWord.classList.add('current-word');
+                currentWord.classList.remove('current-word');
+                currentWord = tempPrevWord;
+            }
+        }
+        else
+        {
+            if(prevLetter.classList.contains('letter'))
+            {
+                // MOVE TO THE PREVIOUS LETTER
+                currentLetter.classList.remove('current-letter');
+                prevLetter.classList.add('current-letter');
+                prevLetter.classList.remove('correct');
+                prevLetter.classList.remove('incorrect');
+                //console.log('Move to the previous letter');
+            }
+            if(prevLetter.classList.contains('word'))
+            {
+                // Current is at space
+                let prevLetter = currentLetter.previousElementSibling;
+                //console.log(prevLetter);
+                //console.log('I am at space move to the previous letter');
+                // MOVE TO THE PREVIOUS LETTER
+                currentLetter.classList.remove('current-letter');
+                prevLetter.lastChild.classList.add('current-letter');
+                prevLetter.lastChild.classList.remove('correct');
+                prevLetter.lastChild.classList.remove('incorrect');
+            }
+            if(prevLetter.classList.contains('space'))
+            {
+                alert('Previous is at space');
+                //console.log('I am at space move to the previous letter');
+                // MOVE TO THE PREVIOUS LETTER
+                currentLetter.classList.remove('current-letter');
+                prevLetter.previousElementSibling.classList.add('current-letter');
+                prevLetter.previousElementSibling.classList.remove('correct');
+                prevLetter.previousElementSibling.classList.remove('incorrect');
+            }
+        }
+    }else
+    {
+        // then check space
+        if(isSpace)
+        {
+            //alert('Space Pressed');
+            //console.log(expectedLetter);
+            if(expectedLetter === '⠀')
+            {
+                //alert('Space is expected');
+                // Move to the next letter if there is one
+                if(currentLetter.nextElementSibling !== null)
+                {
+                    currentLetter.nextElementSibling.childNodes[0].classList.add('current-letter');
+                    currentLetter.classList.add('correct');
+                    currentLetter.classList.remove('current-letter');
+                    let nextWord = currentWord.nextElementSibling;
+                    currentWord.classList.remove('current-word');
+                    nextWord.nextElementSibling.classList.add('current-word');
+                    currentWord = nextWord;
+                }else{
+                    alert('No next letter word or space to move to');
+                    GetQuoteAndFormatWords();
+                }
+            }
+        }else{
+            // Handle Change of Letter
+            if(isLetter)
+            {
+                if(currentLetter)
+                {
+                    if(PressedKey === expectedLetter)
+                    {
+                        // if key correct add correct class to the letter and move to the next letter
+                        currentLetter.classList.add('correct');
+                        currentLetter.classList.remove('current-letter');
+                        //alert(currentLetter.nextElementSibling.innerHTML);
+                        if(currentLetter.nextElementSibling !== null)
+                        {
+                            currentLetter.nextElementSibling.classList.add('current-letter');
+                        }else
+                        {
+                            //  Check if there is a space next
+                            let isSpaceNext = currentWord.nextElementSibling?.classList.contains('space');
+                            if(isSpaceNext)
+                            {
+                                //alert('Space is next');
+                                // move current letter to the space
+                                currentLetter.classList.remove('current-letter');
+                                currentWord.nextElementSibling.classList.add('current-letter');
+                            }else
+                            {
+                                // Check if thre is a next word
+                                let nextWord = currentWord?.nextElementSibling?.nextElementSibling;
+                                if(nextWord === null || nextWord === undefined)
+                                {
+                                    // Get the next quote and format the words
+                                    //GetQuoteAndFormatWords();
+                                    return;
+                                }else
+                                {
+                                    // Move to the next word
+                                    currentWord.classList.remove('current-word');
+                                    nextWord.classList.add('current-word');
+                                    nextWord.firstElementChild.classList.add('current-letter');
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                    else
+                    {
+                        // if at space and pressed letter instead of space
+                        if(currentLetter.classList.contains('space'))
+                        {
+                            // Pressed Letter instead of space
+                            currentLetter.classList.add('incorrect');
+                            // Move to the next Word
+                            let tempNextWord = currentWord?.nextElementSibling?.nextElementSibling;
+                            if(tempNextWord !== null)
+                            {
+                                // There is a next word to move to.
+                                console.log(tempNextWord);
+                                tempNextWord.classList.add('current-word');
+                                currentWord.classList.remove('current-word');
+                                currentWord = tempNextWord;
+                                // Move to the first letter of the next word
+                                let tempNextLetter = tempNextWord.firstElementChild;
+                                currentLetter.classList.remove('current-letter');
+                                currentLetter = tempNextLetter;
+                                currentLetter.classList.add('current-letter');
+                            }else
+                            {
+                                alert('No next word to move to');
+                                GetQuoteAndFormatWords();
+                            }
+                        }else
+                        {
+                            // This is at letter and pressed wrong key
+                            // if key incorrect add incorrect class to the letter
+                            currentLetter.classList.add('incorrect');
+                            let tempNextLetter = currentLetter.nextElementSibling;
+                            if(tempNextLetter !== null)
+                            {
+                                console.log("wrong letter pressed and there is a next letter to mover to");
+                                currentLetter.nextElementSibling.classList.add('current-letter');
+                                currentLetter.classList.remove('current-letter');
+                            }else
+                                {
+                                    // No next letter to move to
+                                    // Check if there is a space to move to
+                                    let tempSpace = currentWord?.nextElementSibling;
+                                    if(tempSpace !== null)
+                                    {
+                                        // Move current letter to the space
+                                        tempSpace.classList.add('current-letter');
+                                        currentLetter.classList.remove('current-letter');
+                                        currentLetter = tempSpace;
+                                    }else
+                                    {
+                                        alert('No next letter or space to move to');
+                                        GetQuoteAndFormatWords();
+                                    }
+                                }
+                            }
+                        
+
+                    }
+                } else
+                {
+                    if(isLoading === false)
+                    {
+                        alert(currentLetter.innerHTML);
+                        //alert('No current letter');
+                        // Get the next quote and format the words
+                        //GetQuoteAndFormatWords();
+                    }
+                    //alert('No current letter');
+                
+                }
+            }
+        }
+    }
 });
 
 // Get the next quote and format the words
@@ -214,3 +339,11 @@ class Game {
 };
 
 var game = new Game(30, 0, 0, false);
+
+// Always Highlight the current Letter for simplicity
+// KEY EVENTS POSSIBLE SCENARIOS
+// Check the direction of movement if not backspace -> else <-, then check if there is the next element to move to
+// 1. Correct Key Pressed -> Highlight the letter correct and move to the next letter
+// 2. Incorrect Key Pressed -> Highlight the letter incorrect and move to the next letter
+// 3. Space Key Pressed -> Move to the next letter or space
+// 4. Backspace Key Pressed -> delete current letter and move to the previous letter
