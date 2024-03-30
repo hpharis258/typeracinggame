@@ -24,7 +24,7 @@
     <x-guest-layout>
     
     <div id="game-information">
-        <div id="timer">Time Left: 30</div>
+        <div id="timer">Time Left: 00:30</div>
         <div id="wordPerMinuteArea"><h1>WPM: 0</h1></div>
     </div>
    
