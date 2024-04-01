@@ -3,10 +3,13 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Scores;
 
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/home/gameOverNotLoggedIn', [Scores::class, 'GameOverNotLoggedIn'])->name('home.gameOverNotLoggedIn');
 
 Route::get('/about', function () {
     return view('about');

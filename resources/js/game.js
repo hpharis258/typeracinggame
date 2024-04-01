@@ -2,6 +2,11 @@
 let isLoading = false;
 let isGameOver = false; 
 
+// show end game modal
+function showEndGameModal() {
+    $('#modalTriggerButton').click();
+};
+
 // API URL
 const RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random';
 // Element to display the quote
@@ -330,7 +335,7 @@ class Game {
                 this.isGameRunning = false;
                 isGameOver = true;
                 quoteDisplayElement.innerText = 'GAME OVER';
-                alert('Game Over');
+                showEndGameModal();
             }
             timerElement.innerHTML = "Time Left: 00:" + this.timeLeft;
             this.timeLeft--;

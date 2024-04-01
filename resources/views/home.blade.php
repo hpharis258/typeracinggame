@@ -22,7 +22,11 @@
 
 @else 
     <x-guest-layout>
-    
+        <!-- Modal toggle -->
+    <button id="modalTriggerButton" style="display:none" data-modal-target="static-modal" data-modal-toggle="static-modal" type="button">
+      Toggle modal
+    </button>
+    <div id="gameCompleteModal">@component('components.gameCompleteModalNotLoggedIn') @endcomponent</div>
     <div id="game-information">
         <div id="timer">Time Left: 00:30</div>
         <div id="wordPerMinuteArea"><h1>WPM: 0</h1></div>
