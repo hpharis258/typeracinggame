@@ -4,6 +4,14 @@ let isGameOver = false;
 
 // show end game modal
 function showEndGameModal() {
+    // Get the element with WPM
+    let wpmElement = document.getElementById('wpm-display').innerHTML;
+    //console.log(document.getElementById('wpm-display'));
+    //console.log(wpmElement);
+    let elementString = wpmElement.toString();
+    elementString = elementString.replace(/\D/g,'');
+
+    document.cookie = "wpm=" + elementString;
     $('#modalTriggerButton').click();
 };
 

@@ -11,7 +11,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('posts', ['posts' => $posts]);
+        $sortedPosts = $posts->sortByDesc('up_vote_count');
+        return view('posts', ['posts' => $sortedPosts]);
     }  
     public function create()
     {
@@ -45,6 +46,18 @@ class PostController extends Controller
         $post->update($data);
 
         return redirect(route('posts.index'))->with("success", "Post updated successfully!");
+    }
+    public function updateUpvote(Post $post, Request $request)
+    {
+        $post->up_vote_count += 1;
+        $post->save();
+        return redirect(route('posts.index'))->with("success", "Post up-voted successfully!");
+    }
+    public function updateDownvote(Post $post, Request $request)
+    {
+        $post->up_vote_count -= 1;
+        $post->save();
+        return redirect(route('posts.index'))->with("success", "Post Down-voted successfully!");
     }
     public function delete(Post $post)
     {

@@ -38,5 +38,10 @@
     
 
         </form>
+        <form method="post" action="{{route('posts.delete', ['post' => $post])}}">
+                        @csrf
+                        @method('delete')
+                        <input type="submit" value="Delete Post"/>
+                    </form>
     </body>
 </html>

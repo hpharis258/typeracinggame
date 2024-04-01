@@ -6,18 +6,21 @@
 @vite(['resources/js/game.js'])
 @if(Auth::check()) 
         <x-app-layout>
-      <!doctype html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        @vite('resources/css/app.css')
-      </head>
-      <body>
-        <h1> WPM:0 </h1>
-
-      </body>
-      </html>
+       <!-- Modal toggle -->
+    <button id="modalTriggerButton" style="display:none" data-modal-target="loggedInGameOverModal" data-modal-toggle="loggedInGameOverModal" type="button">
+      Toggle modal
+    </button>
+    <div id="gameCompleteModal">@component('components.gameCompleteModalLoggedIn') @endcomponent</div>
+    <div id="game-information">
+        <div id="timer">Time Left: 00:30</div>
+        <div id="wordPerMinuteArea"><h1 id="wpm-display">WPM: 56</h1></div>
+    </div>
+   
+    <div id="GameArea" tabindex="0">
+        <div id="wordsToType">Loading Quote...</div>
+        <div id="cursor"></div>
+        <div id="focusError">Click here to start typing!</div>
+    </div>
       </x-app-layout>
 
 @else 
@@ -29,7 +32,7 @@
     <div id="gameCompleteModal">@component('components.gameCompleteModalNotLoggedIn') @endcomponent</div>
     <div id="game-information">
         <div id="timer">Time Left: 00:30</div>
-        <div id="wordPerMinuteArea"><h1>WPM: 0</h1></div>
+        <div id="wordPerMinuteArea"><h1 id="wpm-display">WPM: 22</h1></div>
     </div>
    
     <div id="GameArea" tabindex="0">
