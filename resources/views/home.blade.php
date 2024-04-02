@@ -13,7 +13,7 @@
     <div id="gameCompleteModal">@component('components.gameCompleteModalLoggedIn') @endcomponent</div>
     <div id="game-information">
         <div id="timer">Time Left: 00:30</div>
-        <div id="wordPerMinuteArea"><h1 id="wpm-display">WPM: 56</h1></div>
+        <div id="wordPerMinuteArea"><h1 id="wpm-display">WPM: 0</h1></div>
     </div>
    
     <div id="GameArea" tabindex="0">

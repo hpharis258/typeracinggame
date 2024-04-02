@@ -3,11 +3,6 @@ let isLoading = false;
 let isGameOver = false; 
 let completedWords = 0;
 
-function getCompletedWords(){
-
-
-}
-
 // show end game modal
 function showEndGameModal() {
     // Get the element with WPM
@@ -271,7 +266,7 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                                 {
                                     completedWords++;
                                     // Update the WPM
-                                    console.log(game.timeLeft);
+                                    //console.log(game.timeLeft);
                                     let wpm = Math.floor(completedWords * 60 / (30 - game.timeLeft));
                                     document.getElementById('wpm-display').innerHTML = 'WPM: ' + wpm;
                                     //alert('Completed Correct Words: ' + completedWords);
@@ -368,7 +363,7 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                 {
                     if(isLoading === false)
                     {
-                        alert(currentLetter.innerHTML);
+                        //alert(currentLetter.innerHTML);
                         //alert('No current letter');
                         // Get the next quote and format the words
                         //GetQuoteAndFormatWords();
@@ -419,8 +414,6 @@ class Game {
                 isGameOver = true;
                 quoteDisplayElement.innerText = 'GAME OVER';
                 showEndGameModal();
-                let completed = getCompletedWords();
-                alert('Game Over! You typed ' + completed + ' words correctly');
             }
             timerElement.innerHTML = "Time Left: 00:" + this.timeLeft;
             this.timeLeft--;
