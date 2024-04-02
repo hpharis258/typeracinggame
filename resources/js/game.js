@@ -93,40 +93,70 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
     {
         //alert('Backspace Pressed');
         // Handle Backspace
-        //alert($('current-letter').prev());
         let prevLetter = currentLetter?.previousElementSibling;
         let prevWord = currentWord?.previousElementSibling;
-        if(prevLetter === null && prevWord === null)
+        if(prevLetter === null && currentWord === wordsToType.firstElementChild)
         {
+            //alert('No previous letter or word to move to');
             // there is no previous letter or word to move to 
             return;
         }
         if(prevWord !== null)
         {
-            // check what is the previous element
-            if(prevWord.classList.contains('word'))
+            // First Letter in the current word
+            if(prevLetter === null)
             {
-                // move to the previous word
-            }
+                // This should only happen if the previous letter is null
             if(prevWord.classList.contains('space'))
             {
-                let tempCurrentLetter = prevWord;
-                let tempPrevWord = prevWord.previousElementSibling;
-                //console.log(tempPrevWord);
-                // set current letter to the space
-                tempCurrentLetter.classList.add('current-letter');
-                tempCurrentLetter.classList.remove('correct');
-                tempCurrentLetter.classList.remove('incorrect');
-                currentLetter.classList.remove('current-letter');
-                currentLetter = tempCurrentLetter;
-                // move to the previous word
                 //alert('Previous is at space');
-                tempPrevWord.classList.add('current-word');
+                let prevSpace = prevWord;
+                let tempPrevWord = prevWord.previousElementSibling;
+                if(prevSpace === null)
+                {
+                    alert('No previous word to move to');
+                    return;
+                }
+                if(tempPrevWord === null)
+                {
+                    alert('No current letter to move to');
+                    return;
+                }
+                // Set previous space to current letter
+                prevSpace.classList.add('current-letter');
+                // Remove current letter correct and incorrect classes
+                currentLetter.classList.remove('current-letter');
+                currentLetter.classList.remove('correct');
+                currentLetter.classList.remove('incorrect');
+                // Set current letter to the space
+                currentLetter = prevSpace;
+                // remove correct and incorrect classes from the current letter (the space)
+                currentLetter.classList.remove('correct');
+                currentLetter.classList.remove('incorrect');
+                // move the current word to the previous word
                 currentWord.classList.remove('current-word');
+                tempPrevWord.classList.add('current-word');
+               
                 currentWord = tempPrevWord;
+                console.log(prevSpace);
+                console.log(tempPrevWord);
+                // //console.log(tempPrevWord);
+                // // set current letter to the space
+                // tempCurrentLetter.classList.add('current-letter');
+                // tempCurrentLetter.classList.remove('correct');
+                // tempCurrentLetter.classList.remove('incorrect');
+                // currentLetter.classList.remove('current-letter');
+                // currentLetter = tempCurrentLetter;
+                // // move to the previous word
+                // //alert('Previous is at space');
+                // tempPrevWord.classList.add('current-word');
+                // currentWord.classList.remove('current-word');
+                // currentWord = tempPrevWord;
             }
+            }
+            
         }
-        else
+        if(prevLetter !== null)
         {
             if(prevLetter.classList.contains('letter'))
             {
@@ -148,16 +178,7 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                 prevLetter.lastChild.classList.add('current-letter');
                 prevLetter.lastChild.classList.remove('correct');
                 prevLetter.lastChild.classList.remove('incorrect');
-            }
-            if(prevLetter.classList.contains('space'))
-            {
-                alert('Previous is at space');
-                //console.log('I am at space move to the previous letter');
-                // MOVE TO THE PREVIOUS LETTER
-                currentLetter.classList.remove('current-letter');
-                prevLetter.previousElementSibling.classList.add('current-letter');
-                prevLetter.previousElementSibling.classList.remove('correct');
-                prevLetter.previousElementSibling.classList.remove('incorrect');
+                currentLetter = prevLetter.lastChild;
             }
         }
     }else
@@ -181,7 +202,7 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                     nextWord.nextElementSibling.classList.add('current-word');
                     currentWord = nextWord;
                 }else{
-                    alert('No next letter word or space to move to');
+                    //alert('No next letter word or space to move to');
                     GetQuoteAndFormatWords();
                 }
             }
@@ -254,7 +275,7 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                                 currentLetter.classList.add('current-letter');
                             }else
                             {
-                                alert('No next word to move to');
+                                //alert('No next word to move to');
                                 GetQuoteAndFormatWords();
                             }
                         }else
@@ -281,7 +302,7 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                                         currentLetter = tempSpace;
                                     }else
                                     {
-                                        alert('No next letter or space to move to');
+                                        //alert('No next letter or space to move to');
                                         GetQuoteAndFormatWords();
                                     }
                                 }
