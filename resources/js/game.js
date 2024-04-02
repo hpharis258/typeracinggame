@@ -1,6 +1,12 @@
 // Global Variables
 let isLoading = false;
 let isGameOver = false; 
+let completedWords = 0;
+
+function getCompletedWords(){
+
+
+}
 
 // show end game modal
 function showEndGameModal() {
@@ -260,6 +266,16 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                                 // move current letter to the space
                                 currentLetter.classList.remove('current-letter');
                                 currentWord.nextElementSibling.classList.add('current-letter');
+                                // if word is correct increment the completed words
+                                if($('.current-word letter.correct').length === $('.current-word letter').length)
+                                {
+                                    completedWords++;
+                                    // Update the WPM
+                                    console.log(game.timeLeft);
+                                    let wpm = Math.floor(completedWords * 60 / (30 - game.timeLeft));
+                                    document.getElementById('wpm-display').innerHTML = 'WPM: ' + wpm;
+                                    //alert('Completed Correct Words: ' + completedWords);
+                                }
                             }else
                             {
                                 // Check if thre is a next word
@@ -271,10 +287,19 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                                     return;
                                 }else
                                 {
+                                    // Increment the completed words
+                                    //alert("Moving");
+                                    // if($('.current-word letter correct').length === $('.current-word letter').length)
+                                    // {
+                                    //     completedWords++;
+                                    //     alert('Completed Correct Words: ' + completedWords);
+                                    // }  
                                     // Move to the next word
                                     currentWord.classList.remove('current-word');
                                     nextWord.classList.add('current-word');
                                     nextWord.firstElementChild.classList.add('current-letter');
+                                    
+                                    
                                 }
                             }
                             
@@ -394,6 +419,8 @@ class Game {
                 isGameOver = true;
                 quoteDisplayElement.innerText = 'GAME OVER';
                 showEndGameModal();
+                let completed = getCompletedWords();
+                alert('Game Over! You typed ' + completed + ' words correctly');
             }
             timerElement.innerHTML = "Time Left: 00:" + this.timeLeft;
             this.timeLeft--;
