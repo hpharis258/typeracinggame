@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\post;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -10,9 +10,11 @@ class PostController extends Controller
     //
     public function index()
     {
-        $posts = Post::all();
-        $sortedPosts = $posts->sortByDesc('up_vote_count');
-        return view('posts', ['posts' => $sortedPosts]);
+        //$posts = Post::all();
+        //$sortedPosts = $posts->sortByDesc('up_vote_count');
+        $posts = Post::paginate(5)->withQueryString();
+       // $posts = DB::table('posts')->orderBy('up_vote_count', 'DESC')->cursorPaginate(5);
+        return view('posts', ['posts' => $posts]);
     }  
     public function create()
     {

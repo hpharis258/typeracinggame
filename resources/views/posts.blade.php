@@ -62,6 +62,7 @@
     
 </div>
 
+
 <div style="margin-bottom:20px"></div>
 
 
@@ -70,9 +71,11 @@
     
 
     @endforeach
-
+    {{ $posts->links() }}
       </div>
-      <div class="box-border h-32 w-32 p-4 "></div>
+      
+      <div class="box-border h-32 w-1/2 p-4 "></div>
+     
       
 </div>
 
