@@ -205,6 +205,35 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                     //alert('No next letter word or space to move to');
                     GetQuoteAndFormatWords();
                 }
+            }else
+            {
+                // space is pressed instead of letter 
+                let tempLetter = currentLetter.nextElementSibling;
+                if(tempLetter !== null)
+                {
+                    tempLetter.classList.add('current-letter');
+                    currentLetter.classList.add('incorrect');
+                    currentLetter.classList.remove('current-letter');
+                    currentLetter = tempLetter;
+                }else
+                {
+                    // At the last letter in a word
+                    // check if there is a space next if yes move to the space
+                    let tempSpace = currentWord.nextElementSibling;
+                    if(tempSpace !== null)
+                    {
+                        tempSpace.classList.add('current-letter');
+                        currentLetter.classList.add('incorrect');
+                        currentLetter.classList.remove('current-letter');
+                        currentLetter = tempSpace;
+                    }else
+                    {
+                        //alert('No next letter or space to move to');
+                        GetQuoteAndFormatWords();
+                    }
+                }
+                
+                //alert('Space is pressed instead of letter');
             }
         }else{
             // Handle Change of Letter
@@ -238,7 +267,7 @@ document.getElementById("GameArea").addEventListener("keyup", function(event) {
                                 if(nextWord === null || nextWord === undefined)
                                 {
                                     // Get the next quote and format the words
-                                    //GetQuoteAndFormatWords();
+                                    GetQuoteAndFormatWords();
                                     return;
                                 }else
                                 {
