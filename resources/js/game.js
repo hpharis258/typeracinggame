@@ -11,9 +11,11 @@ function showEndGameModal() {
     //console.log(wpmElement);
     let elementString = wpmElement.toString();
     elementString = elementString.replace(/\D/g,'');
-
-    document.cookie = "wpm=" + elementString;
+    //alert('Your WPM is: ' + elementString);
+    localStorage.setItem("wpm", elementString);
+    //document.cookie = "wpm=" + elementString;
     $('#modalTriggerButton').click();
+
 };
 
 // API URL
@@ -416,6 +418,14 @@ class Game {
                 showEndGameModal();
             }
             timerElement.innerHTML = "Time Left: 00:" + this.timeLeft;
+            // Re calculate the WPM every second even if not correct words are typed
+            let wpm = Math.floor(completedWords * 60 / (30 - game.timeLeft));
+            document.getElementById('wpm-display').innerHTML = 'WPM: ' + wpm;
+            document.getElementById('wpmModalDisplay').innerHTML = wpm;
+            document.getElementById('wpmModalValue').value = wpm;
+            // SET WPM local storage after update
+            //localStorage.setItem("wpm", wpm);
+            //
             this.timeLeft--;
         }, 1000);
     }
