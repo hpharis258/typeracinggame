@@ -3,6 +3,7 @@ let isLoading = false;
 let isGameOver = false; 
 let completedWords = 0;
 
+
 // show end game modal
 function showEndGameModal() {
     // Get the element with WPM

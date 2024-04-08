@@ -18,8 +18,9 @@
             <!-- Modal body -->
             <div class="p-4 md:p-5 space-y-4">
                 <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                     Great job! You have completed the game. To post your score and see how you compare to other users please log in or sign up. 
+                     Great job! You have completed the game, your WPM is <b id="wpmModalDisplay"></b> . To post your score and see how you compare to other users please log in or sign up. 
                 </p>
+                <input type="text" name="wpm" id="wpmModalValue" style="display:none;" />
                 <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                     If you would like to play again without logging in, refresh the page. If you choose to sign up, your data will not be used in any way other than to allow the functionality of this website, and you can delete your account at any time. However if the website is hacked or the database is leaked, your data could be exposed to the public and I will no be held responsible for any damages that may occur, please use this website at your own risk.
                 </p>

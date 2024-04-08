@@ -12,7 +12,7 @@ class PostController extends Controller
     {
         //$posts = Post::all();
         //$sortedPosts = $posts->sortByDesc('up_vote_count');
-        $posts = Post::paginate(5)->withQueryString();
+        $posts = Post::orderBy('up_vote_count','desc')->paginate(5)->withQueryString();
        // $posts = DB::table('posts')->orderBy('up_vote_count', 'DESC')->cursorPaginate(5);
         return view('posts', ['posts' => $posts]);
     }  

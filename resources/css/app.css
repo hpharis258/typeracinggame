@@ -88,10 +88,16 @@ div.word{
 .space.correct {
     color: green;
     background-color: green;
+    border-radius: 100px;
 }
 .space.incorrect {
     color: red;
     background-color: red;
+    border-radius: 100px;
+}
+.space{
+    height: 15px; 
+    width: 15px; 
 }
 
 #cursor{

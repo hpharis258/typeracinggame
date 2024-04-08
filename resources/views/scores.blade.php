@@ -33,7 +33,10 @@
                     {{$score->wpm}}
                 </td>
                 <td class="px-6 py-4">
-                    <img src="{{$score->imageurl}}" style="max-width: 100px" />
+                    <img src="{{ asset('uploads/scores/' . $score->imageurl) }}" style="max-width: 100px" />
+                </td>
+                <td>
+                {{$score->imageurl}}
                 </td>
             </tr>
             @endforeach
