@@ -11,6 +11,22 @@ $user = Auth::user();
 @endphp
         <x-app-layout>
        <!-- Modal toggle -->
+       <script>
+        let isCamera = false;
+        function ToggleImageInput() {
+          if (isCamera) {
+            document.getElementById("fileInputArea").hidden = false;
+            document.getElementById("cameraPreviewArea").hidden = true;
+            document.getElementById("PhotoArea").hidden = true;
+            isCamera = false;
+          } else {
+            document.getElementById("fileInputArea").hidden = true;
+            document.getElementById("cameraPreviewArea").hidden = false;
+            document.getElementById("PhotoArea").hidden = false;
+            isCamera = true;
+          }
+        }
+        </script>
     <button id="modalTriggerButton" style="display:none" data-modal-target="loggedInGameOverModal" data-modal-toggle="loggedInGameOverModal" type="button">
       Toggle modal
     </button>
@@ -52,6 +68,11 @@ $user = Auth::user();
                         <label for="wpm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Words Per Minute</label>
                         <input type="text" name="wpm" id="wpmModalValue" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="wpm" readonly required="">
                     </div>
+                    <label class="inline-flex items-center cursor-pointer">
+                      <input type="checkbox" value="" onClick="ToggleImageInput()" class="sr-only peer">
+                      <div  class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                      <span  class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Use Camera?</span>
+                    </label>
                     <div id="cameraPreviewArea" class="camera col-span-2">
                       <h2>Video Preview</h2>
                       <video id="video">Video stream not available.</video>
@@ -116,19 +137,19 @@ $user = Auth::user();
     canvas = document.getElementById("canvas");
     photo = document.getElementById("photo");
     startbutton = document.getElementById("startbutton");
-
+    // Hide camera initially
+    document.getElementById("cameraPreviewArea").hidden = true;
+    document.getElementById("PhotoArea").hidden = true;
+    //
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
         video.srcObject = stream;
         video.play();
-        document.getElementById("fileInputArea").hidden = true;
+
       })
       .catch((err) => {
         console.error(`An error occurred: ${err}`);
-        // hide the photo sections if there is no camera available
-        document.getElementById("cameraPreviewArea").hidden = true;
-        document.getElementById("PhotoArea").hidden = true;
         
       });
 
@@ -179,6 +200,20 @@ $user = Auth::user();
     photo.setAttribute("src", data);
   }
 
+  //
+  function dataURLtoFile(dataurl, filename) {
+
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+}
   // Capture a photo by fetching the current contents of the video
   // and drawing it into a canvas, then converting that to a PNG
   // format data URL. By drawing it on an offscreen canvas and then
@@ -193,11 +228,20 @@ $user = Auth::user();
       context.drawImage(video, 0, 0, width, height);
 
       const data = canvas.toDataURL("image/png");
-      console.log(data);
+      //console.log(data);
+      let userName = document.getElementById("username").value;
+      const file = dataURLtoFile(data, userName + Date.now() + ".png");
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      //console.log(file);
+      //const blob = dataURItoBlob(data);
+      //const imageFile = new File(blob, userName + ".png", { type: "image/png" });
+
       // Set as the image source
-      let input = document.getElementsByName("imageInput");
-      input[0].setAttribute("value", data + ".png");
+      let input = document.getElementById("imageInput");
       console.log(input);
+      input.files = dataTransfer.files;
+      //console.log(input);
       //document.getElementsByName("imageInput")[0].setAttribute("value", data);
 
       //console.log(data);

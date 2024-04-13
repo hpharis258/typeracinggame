@@ -10,18 +10,18 @@
         @vite('resources/css/app.css')
       </head>
       <body>
-    <div class="flex flex-col justify-center items-center rounded-xl">
-    <table class="w-11/12 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <div style="margin-top: 20px;" class="flex flex-col justify-center items-center rounded-xl">
+    <table class="w-1/3 text-sm  text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3 rounded-s-lg" style="font-size: 20px;">
-                    Username
+                    User
                 </th>
                 <th scope="col" class="px-6 py-3" style="font-size: 20px;">
-                    Words Per Minute
+                    WPM
                 </th>
                 <th scope="col" class="px-6 py-3 rounded-e-lg" style="font-size: 20px;">
-                    Image
+                    Photo
                 </th>
             </tr>
         </thead>
@@ -38,9 +38,9 @@
                     <?php $url = asset('uploads/scores/'.$score->imageurl) ?>
                     <img src="{{$url}}" style="max-width: 100px" />
                 </td>
-                <td>
+                <!-- <td>
                 {{Storage::url($score->imageurl);}}
-                </td>
+                </td> -->
             </tr>
             @endforeach
         </tbody>
