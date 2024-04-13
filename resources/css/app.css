@@ -19,7 +19,9 @@ div.word{
 .current-letter {
     color: blue;
     background-color: yellow;
+    border-radius: 100px;
 }
+
 
 #game-information{
     display: flex;

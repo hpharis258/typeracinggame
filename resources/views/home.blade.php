@@ -193,8 +193,11 @@ $user = Auth::user();
       context.drawImage(video, 0, 0, width, height);
 
       const data = canvas.toDataURL("image/png");
+      console.log(data);
       // Set as the image source
-      document.getElementsByName("imageInput").value = data;
+      let input = document.getElementsByName("imageInput");
+      input[0].setAttribute("value", data + ".png");
+      console.log(input);
       //document.getElementsByName("imageInput")[0].setAttribute("value", data);
 
       //console.log(data);

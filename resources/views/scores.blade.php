@@ -1,3 +1,5 @@
+
+
 @if(Auth::check()) 
         <x-app-layout>
       <!doctype html>
@@ -33,10 +35,11 @@
                     {{$score->wpm}}
                 </td>
                 <td class="px-6 py-4">
-                    <img src="{{ asset('uploads/scores/' . $score->imageurl) }}" style="max-width: 100px" />
+                    <?php $url = asset('uploads/scores/'.$score->imageurl) ?>
+                    <img src="{{$url}}" style="max-width: 100px" />
                 </td>
                 <td>
-                {{$score->imageurl}}
+                {{Storage::url($score->imageurl);}}
                 </td>
             </tr>
             @endforeach
