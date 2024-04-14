@@ -1,14 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Create New Post</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    </head>
-    <body>
-        <h1> Create New Post </h1>
-        <div>
+@php
+$user = Auth::user();
+@endphp
+<script src="http://code.jquery.com/jquery-1.9.0rc1.js"></script>
+
+<x-app-layout>
+<div class="flex flex-col justify-center items-center rounded-xl ">
+<iframe src="https://apimeme.com/" height="500px" width="50%"></iframe>
+    <div class="w-1/4 mb-20 mt-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    
+    <h1 class="flex flex-col justify-center items-center rounded-xl"> Share a Meme </h1>
+        
+        <form method="post" action="{{route('memes.store')}}">
+            @csrf
+            @method('post')
+            <div class="mb-6 col-span-2">
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                <input type="text" name="username" value="{{$user->name}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+            </div>
+            <div class="mb-6">
+                <label for="imageurl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meme Link</label>
+                <input type="text" id="imageurl" name="imageurl" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+          
+            
+            <div class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">
             @if($errors->any())
                 <ul>
                     @foreach($errors->all() as $error)
@@ -16,27 +31,17 @@
                     @endforeach
                 </ul>
             @endif
-        </div>
-        <form method="post" action="{{route('posts.store')}}">
-            @csrf
-            @method('post')
-            <div>
-                <label>Title</label>
-                <input type="text" name="title">
-            </div> 
-            <div>
-                <label>Content</label>
-                <input type="text" name="content">
-            </div>   
-            <div>
-                <label>Image</label>
-                <input type="file" name="image">
-            </div>   
-            <div>
-                <input type="submit" value="Create new Post!">
+            </div>
+            <div class="flex flex-col justify-center items-center rounded-xl mt-6" >
+                <input class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit" value="Create">
             </div>  
-    
+            
+
 
         </form>
-    </body>
-</html>
+       
+    
+    </div>
+</div>
+      
+</x-app-layout>

@@ -21,23 +21,15 @@ class ScoresController extends Controller
             'username' => 'required',
             'wpm' => 'required',
             'imageurl' => 'nullable',
+            'imageInput' => 'required',
         ]);
-        try{
             $imageFile = $request->file('imageInput');
             $extension = $imageFile->getClientOriginalExtension(); 
             $filename = $data['username'].time().'.' . $extension;
             $imageFile->move('uploads/scores/', $filename);
             $data['imageurl'] = $filename;
             $newScore = Score::create($data);
-        }catch(Exception $e){
-            $imageFile = $request->file('imageInput');
-            //$extension = $imageFile->getClientOriginalExtension(); 
-            $filename = $data['username'].time().'.' . 'png';
-            $imageFile->move('uploads/scores/', $filename);
-            $data['imageurl'] = $filename;
-            $newScore = Score::create($data);
-
-        }
+        
         
         return redirect(route('scores.index'));
     }

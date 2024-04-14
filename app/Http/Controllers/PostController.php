@@ -23,11 +23,9 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'user_id' => 'nullable',
-            'title' => 'required',
-            'content' => 'required',
-            'image' => 'nullable|image',
-            'up_vote_count' => 'integer',
+            'user_id' => 'required',
+            '' => 'required',
+            'up_vote_count' => 'integer:default(0)',
         ]);
         $newPost = Post::create($data);
         return redirect(route('posts.index'));

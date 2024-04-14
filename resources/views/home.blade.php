@@ -56,7 +56,7 @@ $user = Auth::user();
                     If you post your score it will be visible in the Scores page. The image that you upload will be stored in a public cloud storage and will be visible to everyone. Uploading inappropriate images will result in a ban.
                 </p>
             </div>
-            <form class="p-4 md:p-5" enctype="multipart/form-data" method="post" action= "{{route('scores.store')}}">
+            <form id="scoreStoreForm" class="p-4 md:p-5" enctype="multipart/form-data" method="post" action= "{{route('scores.store')}}">
                 @csrf
                 @method('post')
                 <div class="grid gap-4 mb-4 grid-cols-2">
@@ -256,7 +256,17 @@ $user = Auth::user();
   // once loading is complete.
   window.addEventListener("load", startup, false);
 })();
+           function submitForm(){
+              event.preventDefault();
+              let fileInput = document.getElementById("imageInput");
+              if(fileInput.files.length == 0){
+                alert("Please upload an image");
+                return;
+              }
+              
 
+              document.getElementById("scoreStoreForm").submit();
+           }
                   </script>
                 </div>
             <!-- Modal footer -->
@@ -264,13 +274,13 @@ $user = Auth::user();
 
                
             </div> 
-                <button data-modal-hide="static-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onclick="window.location.href='/login'">Post</button>
+                <button data-modal-hide="static-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onclick="submitForm(event)">Post</button>
                 <button data-modal-hide="static-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="window.location.href='/'">Decline</button>
             </div>
             </form>
 
     </div>
-</div></div>
+</div>
     <div id="game-information">
         <div id="timer">Time Left: 00:30</div>
         <div id="wordPerMinuteArea"><h1 id="wpm-display">WPM: 0</h1></div>

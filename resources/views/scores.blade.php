@@ -65,8 +65,8 @@
         @vite('resources/css/app.css')
       </head>
       <body>
-        <h1 style="font-size:36px; margin-top:20%; vertical-align:middle; height: 90%; text-align:center; display:table; width:100%;">Please log in or sign up to see the scores page! </h1>
-
+        <h1 style="font-size:36px; margin-top:5%; height: 20%; text-align:center; width:100%;">Please log in or sign up to see the scores page! </h1>
+        <img style="display:block;margin-left:auto;margin-right: auto; margin-bottom: 100px;" src=" https://api.memegen.link/images/ds/Log_in/Create_Account.jpg?watermark=MemeComplete.com&token=oz2grt80ns2xujdwweic" />
       </body>
       </html>
     </x-guest-layout>

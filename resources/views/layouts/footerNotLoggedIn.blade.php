@@ -9,7 +9,7 @@
             <a href="/scores" class="hover:underline me-4 md:me-6">Scores</a>
         </li>
         <li>
-            <a href="/posts" class="hover:underline me-4 md:me-6">Posts</a>
+            <a href="/memes" class="hover:underline me-4 md:me-6">Memes</a>
         </li>
     </ul>
 </footer>

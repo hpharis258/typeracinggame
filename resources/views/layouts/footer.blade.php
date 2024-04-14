@@ -9,10 +9,10 @@
             <a href="/scores" class="hover:underline me-4 md:me-6">Scores</a>
         </li>
         <li>
-            <a href="/posts" class="hover:underline me-4 md:me-6">Posts</a>
+            <a href="/memes" class="hover:underline me-4 md:me-6">Memes</a>
         </li>
         <li>
-            <form method="post" action="{{route('logout')}}">
+            <form style="" method="post" action="{{route('logout')}}">
             @csrf
             @method('post')
                 <button type="submit" class="hover:underline me-4 md:me-6">Logout</button>
