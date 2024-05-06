@@ -1,4 +1,33 @@
 <x-guest-layout>
+    <script>
+        function checkEmail()
+        {
+            var email = document.getElementById('email').value;
+            var emailError = document.getElementById('email-error');
+            
+
+            fetch('/registercheckemail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    email: email
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Email is already taken') {
+                    emailError.classList.remove('hidden');
+                   
+                } else {
+                    emailError.classList.add('hidden');
+                }
+            });
+        }
+        </script>
     <div class="h-screen flex items-center justify-center">
         <form method="POST" action="{{ route('register') }}" class="w-2/12">
             @csrf
@@ -13,7 +42,8 @@
             <!-- Email Address -->
             <div class="mt-4">
                 <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-text-input id="email" onChange="checkEmail()" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <div id="email-error" class="hidden text-red-500 text-sm mt-2" role="alert">This email is already used!</div>
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 

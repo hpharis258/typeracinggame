@@ -22,6 +22,16 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+    public function checkemail(Request $request)
+    {
+        if (User::where('email', $request->email)->exists()) {
+            return response()->json(['message' => 'Email is already taken']);
+        }
+        
+
+        return response()->json(['message' => 'Email is available']);
+    }
+
     /**
      * Handle an incoming registration request.
      *
