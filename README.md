@@ -1,2 +1,3 @@
-# Type racing game similar to https://monkeytype.com/
+# Type racing game inspired by https://monkeytype.com/
+
 
